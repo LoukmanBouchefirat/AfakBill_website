@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">   
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="home.html">home</a></li>
+                            <li>S'inscrire</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+    <!--breadcrumbs area end-->
+    <div class="container">
+        {% if messages %}
+        {% for message in messages%}                                              
+        <div class="alert alert-success" role="alert">
+             {{ message }} 
+        </div>                                                                      
+        {% endfor %}
+        {% endif %}
+    </div>
+    
+
+	<section class="account">
+		<div class="container">
+            {% if form.errors %}
+            <div class="container">
+                <div class="alert alert-success" role="alert">
+                    <p style="text-align: center;">username est déja utilisé ou bien mot de pass est faible</p>
+                </div>  
+            </div>
+            {% endif %}
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="account-contents" >
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="account-thumb">
+                                    <h2>S'inscrire</h2>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="account-content">
+                                    <form method="POST" action="{% url 'register' %}">
+                                        {% csrf_token %}
+                                        
+                                        <div class="single-acc-field">
+                                            
+                                            <label for="user">Type of user <span></span></label>
+                                            <select>
+                                            <option value="re-register">Revendeur</option>                                        
+                                            </select>
+                                        <br>
+                                        <br>
+                                        </div>
+                                        {{ profile_form.as_p}}
+                                        {{ form.as_p }}
+
+                                        
+                                        
+                                         <!--<div class="single-acc-field">
+                                            
+                                            <label for="user">Type of user <span></span></label>
+                                            <select id="category" onchange="urlHandler(this.value)">
+                                            <option value="register">Normal User</option>  
+                                            <option value="re-register">Revendeur</option>                                        
+                                        </select>
+                                        <br>
+                                        <br>
+                                        </div>
+                                                
+                                        <div class="single-acc-field">
+                                            <label for="name">UserName</label>
+                                            <input type="text" id="username" name="username" value="{{ username }}" placeholder="Enter Your UserName">
+                                        </div>
+                                            
+                                        <div class="single-acc-field">
+                                            <label for="name">Full Name</label>
+                                            <input type="text" id="name" name="fullname" value="{{ fullname }}" placeholder="Enter Your Name">
+                                        </div>
+                                        <div class="single-acc-field">
+                                            <label for="address">address</label>
+                                            <input type="text" id="address" name="address" value="{{ address }}" placeholder="Enter Your Address">
+                                        </div>
+                                        <div class="single-acc-field">
+                                            <label for="Phone">Phone</label>
+                                            <input type="text" id="phone" name="phone" value="{{ phone }}" placeholder="Enter Your phone number">
+                                        </div>
+                                        <div class="single-acc-field">
+                                            <label for="email">Email</label>
+                                            <input type="email" id="email" name="email" value="{{ email }}" placeholder="Enter your Email">
+                                        </div>
+                                                
+                                        <div class="single-acc-field">
+                                            <label for="password">Password</label>
+                                            <input type="password" id="password" name="passwd"  placeholder="At least 6 Charecter">
+                                        </div>-->
+                                        <div class="single-acc-field boxes">
+                                            
+                                        </div>
+                                        <div class="single-acc-field">
+                                            <button type="submit">S'inscrire</button>
+                                        </div>
+                                        <a href="{% url 'login' %}">Vous Avez Déjà Un Compte ? Se Connecter</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+    
+{% endblock %}

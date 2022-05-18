@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">   
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="{% url 'product:home' %}">Accueil</a></li>
+                            <li>Nos Produits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+    <!--breadcrumbs area end-->
+	
+	
+	<!--blog body area start-->
+    <div class="blog_details mt-60">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-9">
+                    <div class="blog_wrapper">
+                        <div class="section-title">
+                            <h2>Nos Produits</h2>
+                        </div>
+                        <div class="row">
+                            {% for product in prd %}
+                            <div class="col-lg-6 col-md-6">
+                                <article class="single_blog mb-60">
+                                    <figure>
+                                        <div class="blog_thumb">
+                                            <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" alt=""></a>
+                                        </div>
+                                        <figcaption class="blog_content">
+                                            <h3><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+                                            <div class="blog_meta">                                        
+                                                <span class="author">Posté Par : <a href="#">admin</a> / </span>                                                                                    
+                                            </div>
+                                            
+                                            <div class="price_box">
+                                                {% if request.user.is_authenticated %}
+                                                    {% if user.userprofile.Is_revendeur %}
+                                                        <span class="current_price">{{product.r_price}} DA</span>                                    
+                                                    {% elif user.is_superuser %} 
+                                                        <span class="current_price">{{product.r_price}} DA (prix revendeur)</span>
+                                                        <br/>
+                                                        <span class="current_price">{{product.n_price}} DA (prix normal)</span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <span class="current_price">{{product.n_price}} DA</span>      
+                                                {% endif %}
+                                            </div>
+                                            
+                                              <footer class="readmore_button">
+                                                <a href="{{ product.get_absolute_url }}">Voir plus de détails</a>
+                                              </footer>  
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            </div>
+                            {% endfor %}                                                    
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-lg-3 col-md-12">
+                    <div class="blog_sidebar_widget" Style="margin-top: 30%" >
+                        
+                        <div class="widget_list widget_post">
+                            <h3>Choisir Une Catégorie</h3>
+                            {% for c in categories %}
+                            <div class="post_wrapper">                               
+                                <div class="post_thumb">
+                                    <a href="{{ c.get_absolute_url }}"><img src="{{ c.image.url }}" alt=""></a>
+                                </div>
+                                <div class="post_info">
+                                    <h3><a href="{{ c.get_absolute_url }}">{{ c.name|title }}</a></h3>
+                                </div>                                
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--blog section area end-->
+	
+	    
+    <!--blog pagination area start-->
+    <div class="blog_pagination">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="pagination">
+                        <ul>
+                            {% if prd.has_previous %}
+                            <li class="next"><a href="?page=1">&laquo</a></li>
+                            <li><a href="?page={{prd.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+                            {% endif %}
+                            Page {{ prd.number }} of {{ prd.paginator.num_pages }}
+                            {% if prd.has_next %}   
+                            <li><a href="?page={{prd.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                            <li class="next"><a href="?page={{prd.paginator.num_pages}}">&raquo</a></li>
+                            {% endif %}                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--blog pagination area end-->
+	
+	
+    {% endblock %}

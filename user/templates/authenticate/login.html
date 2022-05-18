@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">   
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="home.html">Accueil</a></li>
+                            <li>Se Connecter</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+    <!--breadcrumbs area end-->
+    <div class="container">
+        
+            {% if messages %}
+            {% for message in messages%}                                             
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>                                             
+            {% endfor %}
+            {% endif %}
+        
+    </div>
+
+	<section class="account">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="account-contents" >
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="account-thumb">
+                                    <h2>Se Connecter</h2>                                
+                                </div>                                              
+                            </div>
+                                                
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="account-content">
+                                    <form method="POST" action="">
+                                        {% csrf_token %}
+                                        <div class="single-acc-field">
+                                            <label for="username">UserName</label>
+                                            <input type="text" id="username" name="username" placeholder="Enter your UserName">
+                                        </div>
+                                        <div class="single-acc-field">
+                                            <label for="password">Mot De Pass</label>
+                                            <input type="password" id="password" name="password" placeholder="Enter your password">
+                                        </div>                                       
+                                        <div class="single-acc-field">
+                                            <button type="submit">Se Connecter</button>
+                                        </div>
+                                       
+                                        <a href="{% url 'register' %}">Vous N'avez Pas un Compte ?</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    
+{% endblock %}

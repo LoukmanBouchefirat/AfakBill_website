@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+
+{% block content %}
+   
+
+    <!--Tranding product-->
+    <section class="pt-60 pb-30 gray-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <div class="section-title">
+                        <h2><span class="text-muted">Résultats De Recherche Pour</span> {{request.GET.q}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                {% for p in data %}
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="single-tranding">
+                        <a href="{{ p.get_absolute_url }}">
+                            <div class="tranding-pro-img">
+                                <img src="{{ p.image.url }}" alt="">
+                            </div>
+
+                            <div class="tranding-pro-title">
+                                <h3>{{ p.title }}</h3>
+                                <h4>{{ p.category.name }}</h4>
+                            </div>
+                            <div class="tranding-pro-price">
+                                <div class="price_box">
+                                    {% if request.user.is_authenticated %}
+                                    {% if user.userprofile.Is_revendeur %}
+                                    <span class="current_price">{{p.r_price}} DA</span>                                    
+                                    {% endif %} 
+                                {% else %}
+                                <span class="current_price">{{p.n_price}} DA</span>      
+                                {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+           
+                {% endfor %}   
+            </div>
+             
+            <footer class="readmore_button">
+                <a href="{% url 'product:all_product' %}">Voir Plus</a>
+            </footer>
+        </div>
+    </section><!--Tranding product-->
+
+    <!--blog pagination area start-->
+    <div class="blog_pagination">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="pagination">
+                        <ul>
+                            {% if searchP.has_previous %}
+                            <li class="next"><a href="?page=1">&laquo</a></li>
+                            <li><a href="?page={{searchP.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+                            {% endif %}
+                            Page {{ searchP.number }} of {{ searchP.paginator.num_pages }}
+                            {% if searchP.has_next %}   
+                            <li><a href="?page={{searchP.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                            <li class="next"><a href="?page={{searchP.paginator.num_pages}}">&raquo</a></li>
+                            {% endif %}   
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--blog pagination area end-->
+
+
+   
+    
+
+    
+
+    {% endblock %}
+	
+	
+    

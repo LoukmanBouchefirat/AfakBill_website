@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+
+{% block content %}
+    <!--slider area start-->
+    <section class="slider_section d-flex align-items-center" data-bgimg="{% static 'homepage/assets/img/slider/slider3.jpg' %}">
+        <div class="slider_area owl-carousel">
+            <div class="single_slider d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-6">
+                            <div class="slider_content">
+                                <h1>PC De Niveau Supérieur</h1>
+                                <h2>Qualité Merveilleuse Pour l'Utilisation</h2>
+                                <p>  </p>
+                                <a class="button" href="{% url 'product:all_product' %}">Voir Plus</a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                            <div class="slider_content">
+                                <img src="{% static 'homepage/assets/img/product/1.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="single_slider d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-6">
+                            <div class="slider_content">
+                                <h1>Meilleur Ordinateur De Bureau Inclus</h1>
+                                <h2>Qualité Merveilleuse Pour l'Utilisation</h2>
+                                <p> </p>
+                                <a class="button" href="{% url 'product:all_product' %}">Voir Plus</a>
+                            </div>
+                        </div>                        
+                        <div class="col-xl-6 col-md-6">
+                            <div class="slider_content">
+                                <img src="{% static 'homepage/assets/img/product/2.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single_slider d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-6">
+                            <div class="slider_content">
+                                <h1>Avec Quelques Spécial</h1>
+                                <h2>Fonctionnalités pour vous</h2>
+                                <p> </p>
+                                <a class="button" href="{% url 'product:all_product' %}">Voir Plus</a>
+                            </div>
+                        </div>                      
+                        <div class="col-xl-6 col-md-6">
+                            <div class="slider_content">
+                                <img src="{% static 'homepage/assets/img/product/3.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--slider area end-->
+
+    <!--Tranding product-->
+    <section class="pt-60 pb-30 gray-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <div class="section-title">
+                        <h2>Nouvelle arrivage</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                {% for p in data %}
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="single-tranding">
+                        <a href="{{ p.get_absolute_url }}">
+                            <div class="tranding-pro-img">
+                                <img src="{{ p.image.url }}" alt="">
+                            </div>
+
+                            <div class="tranding-pro-title">
+                                <h3>{{ p.title }}</h3>
+                                <h4>{{ p.category.name }}</h4>
+                            </div>
+                            <div class="tranding-pro-price">
+                                <div class="price_box">
+                                    {% if request.user.is_authenticated %}
+                                        {% if user.userprofile.Is_revendeur %}
+                                            <span class="current_price">{{p.r_price}} DA</span>                                    
+                                        {% elif user.is_superuser %} 
+                                            <span class="current_price">{{p.r_price}} DA (prix revendeur)</span>
+                                            <br/>
+                                            <span class="current_price">{{p.n_price}} DA (prix normal)</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="current_price">{{p.n_price}} DA</span>      
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+           
+                {% endfor %}   
+            </div>
+             
+            <footer class="readmore_button">
+                <a href="{% url 'product:all_product' %}">Voir Plus</a>
+            </footer>
+        </div>
+    </section><!--Tranding product-->
+
+
+   
+    
+
+    <!--shipping area start-->
+    <section class="shipping_area">
+        <div class="container">
+            <div class=" row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                    <div class="single_shipping">
+                        <div class="shipping_icone">
+                            <img src="{% static 'homepage/assets/img/about/shipping1.png' %}" alt="">
+                        </div>
+                        <div class="shipping_content">
+                            <h2>Free Shipping</h2>
+                            <p>Free shipping on all JIJEL order</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                    <div class="single_shipping">
+                        <div class="shipping_icone">
+                            <img src="{% static 'homepage/assets/img/about/shipping3.png' %}" alt="">
+                        </div>
+                        <div class="shipping_content">
+                            <h2>Fast Delivery</h2>
+                            <p>You get a fast delivery</p>
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                    <div class="single_shipping">
+                        <div class="shipping_icone">
+                            <img src="{% static 'homepage/assets/img/about/shipping4.png' %}" alt="">
+                        </div>
+                        <div class="shipping_content">
+                            <h2>Best Quality</h2>
+                            <p>We ensure the best quality</p>
+                        </div>
+                    </div>
+                </div>                          
+            </div>
+        </div>
+    </section>
+    <!--shipping area end-->
+
+    {% endblock %}
+	
+	
+    

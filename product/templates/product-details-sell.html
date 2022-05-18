@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">   
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="home.html">Accueil</a></li>
+                            <li>Détails Du Produit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+    <!--breadcrumbs area end-->
+    
+    <!--product details start-->
+    <div class="product_details mt-60 mb-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                   <div class="product-details-tab">
+                        <div id="img-1" class="zoomWrapper single-zoom">
+                            <a href="#">
+                                <img id="zoom1" src="{{ product.image.url }}" data-zoom-image="{{ product.image.url }}" alt="big-1">
+                            </a>
+                        </div>
+                        <div class="single-zoom-thumb">
+                            <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+                            {% for pi in product.productimage_set.all %}
+                                <li>
+                                    <a href="#" class="elevatezoom-gallery active" data-update="" data-image="{{ pi.image.url }}" data-zoom-image="{{ pi.image.url }}">
+                                        <img src="{{ pi.image.url }}" alt="zo-th-1"/>
+                                    </a>
+
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product_d_right">
+                       <form action="#">
+                           
+                            <h1>{{ product.title }}</h1>
+                            <div class=" product_ratting">
+                                <br>
+                                <br>
+                                
+                            </div>
+                            <div class="price_box" style="font-size: 18px;">
+                                <p>Condition : <var>{{product.condition}}</var></p>
+                                
+                            </div>
+                            <div class="product_desc">
+                                
+                            </div>
+                            <br>
+							
+                            <div class="price_box">
+                                {% if request.user.is_authenticated %}
+                                    {% if user.userprofile.Is_revendeur %}
+                                        <span class="current_price">{{product.r_price}} DA</span>                                    
+                                    {% elif user.is_superuser %} 
+                                        <span class="current_price">{{product.r_price}} DA (prix revendeur)</span>
+                                        <br/>
+                                        <span class="current_price">{{product.n_price}} DA (prix normal)</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="current_price">{{product.n_price}} DA</span>      
+                                {% endif %}
+                            </div>
+                            <br>
+                            <br>
+                            <div class="product_variant quantity">
+                                <label>quantity</label>
+                                <input min="1" max="100" value="1" type="number">
+                                <button class="button" type="submit">Commander</button>  
+                                
+                            </div>
+                            <div class=" product_d_action">
+                               <ul>
+                                   <br>
+                               </ul>
+                            </div>
+                            <div class="product_meta" >
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <span >Catégorie: <a href="#">{{product.category.name|title}}</a></span>
+                                
+                                
+                            </div>
+                            <br>
+                            <br>
+                            <hr>
+                            <div class="container-fluid">
+                                <div class="row">
+                                  <div class="col-4" style="font-size: 16px; font-weight: bold;">Contacter l'annonceur</div>
+                                  <div class="col-4" style="font-size: 16px; font-weight: bold; ">phone : <span>0782356485</span></div>
+                                  <div class="col-4" style="font-size: 16px; font-weight: bold;">Email : <span>abc@gmail.com</span></div>
+                                </div>
+                              </div>
+                            
+                            
+                        </form>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <!--product details end-->
+    
+    <!--product info start-->
+    <div class="product_d_info mb-60">
+        <div class="container">   
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_d_inner">   
+                        <div class="product_info_button">    
+                            <ul class="nav" role="tablist">
+                                <li >
+                                    <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Description</a>
+                                </li>
+                                <li>
+                                     <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Specification</a>
+                                </li>
+                              <!--  <li>
+                                   <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews (1)</a>
+                                </li>-->
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="info" role="tabpanel" >
+                                <div class="product_info_content">
+                                    <p>{{product.desc}}</p>
+                                </div>    
+                            </div>
+                            <div class="tab-pane fade" id="sheet" role="tabpanel" >
+                                <div class="product_info_content">
+                                    <p>{{product.specs}}</p>
+                                </div>
+                                <div class="product_info_content">
+                                </div>    
+                            </div>
+
+                           <!-- <div class="tab-pane fade" id="reviews" role="tabpanel" >
+                                <div class="reviews_wrapper">
+                                    <h2>1 review for Donec eu furniture</h2>
+                                    <div class="reviews_comment_box">
+                                        <div class="comment_thmb">
+                                            <img src="{% static 'homepage/assets/img/blog/comment2.jpg' %}" alt="">
+                                        </div>
+                                        <div class="comment_text">
+                                            <div class="reviews_meta">
+                                                <div class="star_rating">
+                                                    <ul>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                        <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                                    </ul>   
+                                                </div>
+                                                <p><strong>admin </strong>- September 12, 2018</p>
+                                                <span>roadthemes</span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="comment_title">
+                                        <h2>Add a review </h2>
+                                        <p>Your email address will not be published.  Required fields are marked </p>
+                                    </div>
+                                    <div class="product_ratting mb-10">
+                                       <h3>Your rating</h3>
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product_review_form">
+                                        <form action="#">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="review_comment">Your review </label>
+                                                    <textarea name="comment" id="review_comment" ></textarea>
+                                                </div> 
+                                                <div class="col-lg-6 col-md-6">
+                                                    <label for="author">Name</label>
+                                                    <input id="author"  type="text">
+
+                                                </div> 
+                                                <div class="col-lg-6 col-md-6">
+                                                    <label for="email">Email </label>
+                                                    <input id="email"  type="text">
+                                                </div>  
+                                            </div>
+                                            <button type="submit">Submit</button>
+                                         </form>   
+                                    </div> 
+                                </div>     
+                            </div>-->
+                        </div>
+                    </div>     
+                </div>
+            </div>
+        </div>    
+    </div>  
+    <!--product info end-->
+
+
+{% endblock %}
